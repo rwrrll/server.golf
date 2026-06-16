@@ -59,11 +59,27 @@ It's just one file — host it anywhere. To put it on `server.golf`:
 
 **Netlify**: drag the folder into the dashboard, then add the custom domain.
 
-**Any host / nginx / S3**: upload `index.html`. Done.
+**Any host / nginx / S3**: upload `index.html` (and `og.png`, `og-square.png`). Done.
+
+> Deploy the `og*.png` files alongside `index.html` — the social/OpenGraph tags
+> point at `https://server.golf/og.png` (1.91:1) and `…/og-square.png` (1:1).
 
 ## Files
 
 - `index.html` — the whole app (HTML + CSS + JS + seed data).
+- `og.png` — 1200×630 social-share image (wide / Twitter `summary_large_image`).
+- `og-square.png` — 1200×1200 square share image (chat apps that crop square).
+- `og.html` / `og-square.html` — sources for the images. To regenerate after editing,
+  screenshot each at its size with any headless Chrome/Chromium:
+  ```shell
+  chromium --headless=new --no-sandbox --hide-scrollbars \
+    --force-device-scale-factor=1 --window-size=1200,630 \
+    --virtual-time-budget=8000 --screenshot=og.png "file://$PWD/og.html"
+
+  chromium --headless=new --no-sandbox --hide-scrollbars \
+    --force-device-scale-factor=1 --window-size=1200,1200 \
+    --virtual-time-budget=8000 --screenshot=og-square.png "file://$PWD/og-square.html"
+  ```
 - `README.md` — this file.
 
 ## Credits
